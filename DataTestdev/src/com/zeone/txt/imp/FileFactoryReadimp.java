@@ -25,11 +25,6 @@ import com.zeone.txt.FileFactoryRead;
 public class FileFactoryReadimp implements FileFactoryRead {
 
 	private static TreeMap<String, ArrayList<String>> tmp = new TreeMap<String, ArrayList<String>>();
-	// public static HashMap<SensorData,databiud> datatest = new
-	// HashMap<SensorData, databiud>();
-	//
-	// public static HashMap<SensorData,databiud> datatesttzz = new
-	// HashMap<SensorData, databiud>();
 
 	public static ArrayList<databiud> datatest = new ArrayList<databiud>();
 
@@ -245,7 +240,7 @@ public class FileFactoryReadimp implements FileFactoryRead {
 		datab = new ArrayList<databaen>();
 		File file = new File(filepath);
 		List<String> list = FileUtils.readLines(file, "utf-8");
-		int size = list.size() - 14;
+		int size = list.size() - 13;
 		for (int i = 13; i < list.size(); i++) {
 			String al = list.get(i);
 			if (al.indexOf("#") > -1) {
