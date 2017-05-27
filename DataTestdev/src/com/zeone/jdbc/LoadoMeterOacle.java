@@ -1,26 +1,15 @@
-package com.zeone.jdbc;
+package com.zeone.jdbc;  
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
 
 import com.zeone.bean.SensorData;
-/**
- * 数据库相关操作
- */
-public class SensorService {
-	/**
-	 * 获取设备的信息
-	 * 
-	 */
-	
-	
+  
+public class LoadoMeterOacle {
 
-	
 	public static ArrayList<SensorData> getAllSensorInfo() {
 		ArrayList<SensorData> data = new ArrayList<SensorData>();
 		Connection conn = null;
@@ -79,4 +68,6 @@ public class SensorService {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
