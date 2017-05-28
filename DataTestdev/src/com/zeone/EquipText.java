@@ -15,7 +15,7 @@ import com.zeone.lifeline.collector.util.DateUtil;
 import com.zeone.radis.RadisData;
 
 public class EquipText {
-	/** 保存设备信息 */
+	/** 保存设备信息 111s*/
 	private static List<SensorData> data = new ArrayList<SensorData>();
 	/** 判断数据是否正常的时间依据（20分钟） */
 	private final static int INTEVAL = 1000 * 60 * 11;// 变更5分钟
@@ -29,7 +29,7 @@ public class EquipText {
 	static long ns = 1000;// 一秒钟的毫秒数long
 	// 获得两个时间的毫秒时间差异
 	static String a;
-
+	static String b;
 	/**
 	 * @param args
 	 */
