@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.zeone.bean.SensorData;
+import com.zeone.bean.LoadoMeterBean;
+
   
 public class LoadoMeterOacle {
 
-	public static ArrayList<SensorData> getAllSensorInfo() {
-		ArrayList<SensorData> data = new ArrayList<SensorData>();
+	public static ArrayList<LoadoMeterBean> getAllSensorInfo() {
+		ArrayList<LoadoMeterBean> data = new ArrayList<LoadoMeterBean>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -22,16 +23,8 @@ public class LoadoMeterOacle {
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				SensorData s = new SensorData();
-				
-				s.setBridgename(rs.getString("bridgename"));
-				s.setEquipmentid(rs.getString("equipmentid"));
-				s.setEquipmentname(rs.getString("equipmentname"));
-				s.setDevicePosition(rs.getString("device_position"));
-				s.setGatewaynum(rs.getString("gatewaynum"));
-				s.setModularnum(rs.getString("modularnum"));
-				s.setPathnum(rs.getString("pathnum"));
-				s.setLeixing(rs.getString("monproject"));
+				LoadoMeterBean s = new LoadoMeterBean();
+						
 			
 				
 				data.add(s);
