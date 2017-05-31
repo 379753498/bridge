@@ -3,6 +3,10 @@ package com.zeone.bean;
 import java.io.Serializable;
   
 public class LoadoMeterBean implements Serializable{
+	/**  
+	 *   
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * @see车辆ID
 	 */
@@ -49,7 +53,6 @@ public class LoadoMeterBean implements Serializable{
 	private String AXLENUM;
 	/**
 	 * @see轴重(单位吨，多个轴以(,)逗号分隔，保留2位小数)
-
 	 */
 	private String AXLEWEIGHT;
 	/**
