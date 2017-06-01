@@ -19,6 +19,14 @@ public class LoadMeterdata implements Serializable{
 	private int PLATETYPESize;
 	private int MathCarSize;
 	private int checkCarpathSize;
+	private int LoadMetersize;
+	
+	public int getLoadMetersize() {
+		return LoadMetersize;
+	}
+	public void setLoadMetersize(int loadMetersize) {
+		LoadMetersize = loadMetersize;
+	}
 	private int checktimesize;
 	public int getChecktimesize() {
 		return checktimesize;

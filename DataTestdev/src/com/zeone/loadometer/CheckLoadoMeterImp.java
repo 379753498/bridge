@@ -19,7 +19,13 @@ public class CheckLoadoMeterImp {
 		  ArrayList<LoadoMeterBean> allLoadoMeterBean = LoadoMeterOacle.getAllLoadoMeterBean(date);
 		  LoadMeterdata Loaddata= new LoadMeterdata();
 		  for (LoadoMeterBean loadoMeterBean : allLoadoMeterBean) 
-		  {			
+		  {		
+			  if(loadoMeterBean.getISOVERWEIGHT().contains("1"))
+			  {
+				  Loaddata.setLoadMetersize(Loaddata.getLoadMetersize()+1);
+			  }
+			  
+			  
 			  boolean checkShopSign = LoadoMeter.checkShopSign(loadoMeterBean);
 			  if(!checkShopSign)
 			  {
@@ -148,24 +154,12 @@ public class CheckLoadoMeterImp {
 			  
 		  }
 		  
-		  		StringBuffer nb = new StringBuffer();
-		  		 nb.append("日期").append("\t");
-		  		 nb.append("总车数").append("\t");
-		  		 nb.append("车牌识别错误").append("\t");
-		  		 nb.append("车重数据错误").append("\t");
-		  		 nb.append("轴数错误").append("\t");
-		  		 nb.append("轴距错误").append("\t");
-		  		 nb.append("速度数据错误").append("\t");
-		  		 nb.append("加速度数据错误").append("\t");
-		  		 nb.append("车辆类型错误").append("\t");
-		  		 nb.append("超载重量计算错误").append("\t");
-		  		nb.append("图片数据错误错误").append("\t");
-		  		nb.append("时间戳数据错误").append("\n");
-		  		
-		  FileOperation.writeTxFile(nb.toString(),"_", "地磅数据汇总表明细表");
+		  	
 		  
 		  StringBuffer lnb = new StringBuffer();
 		  lnb.append(date).append("\t");
+		  
+		  lnb.append(String.valueOf(Loaddata.getLoadMetersize())).append("\t");
 		  lnb.append(String.valueOf(Loaddata.getAllSize())).append("\t");
 		  lnb.append(String.valueOf(Loaddata.getPLATENOSize())).append("\t");
 		  lnb.append(String.valueOf(Loaddata.getVEHICLEWEIGHTSize())).append("\t");
@@ -184,6 +178,23 @@ public class CheckLoadoMeterImp {
 		  
 		  
 	  }
-	
+	public  void write()
+	{
+		StringBuffer nb = new StringBuffer();
+ 		 nb.append("日期").append("\t");
+ 		 nb.append("总超载数").append("\t");
+ 		 nb.append("总车数").append("\t");
+ 		 nb.append("车牌识别错误").append("\t");
+ 		 nb.append("车重数据错误").append("\t");
+ 		 nb.append("轴数错误").append("\t");
+ 		 nb.append("轴距错误").append("\t");
+ 		 nb.append("速度数据错误").append("\t");
+ 		 nb.append("加速度数据错误").append("\t");
+ 		 nb.append("车辆类型错误").append("\t");
+ 		 nb.append("超载重量计算错误").append("\t");
+ 		 nb.append("图片数据错误错误").append("\t");
+ 		 nb.append("时间戳数据错误").append("\n");
+ FileOperation.writeTxFile(nb.toString(),"_", "地磅数据汇总表明细表");
+	}
 	
 }
