@@ -1,5 +1,7 @@
 package com.zeone.loadometer;
 
+import java.text.DecimalFormat;
+
 public class LoadoMeterinfo {
 
 	/**
@@ -10,9 +12,13 @@ public class LoadoMeterinfo {
 	 * @Description:
 	 */
 	public static double Stringtodouble(String s) {
-		double d = 0;
+		double cny = 0;
 		try {
-			d = Double.valueOf(s).doubleValue();
+			String price_CNY = s; // 6.2041
+			cny = Double.parseDouble(price_CNY);// 6.2041 这个是转为double类型
+			DecimalFormat df = new DecimalFormat("0.00");
+			String CNY = df.format(cny); // 6.20 这个是字符串，但已经是我要的两位小数了
+			cny = Double.parseDouble(CNY); // 6.20
 
 		} catch (Exception e) {
 
@@ -20,7 +26,7 @@ public class LoadoMeterinfo {
 			// TODO: handle exception
 		}
 
-		return d;
+		return cny;
 
 	}
 

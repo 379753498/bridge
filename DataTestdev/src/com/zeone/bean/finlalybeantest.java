@@ -3,6 +3,10 @@ package com.zeone.bean;
 import java.io.Serializable;
 
 public class finlalybeantest implements Serializable{
+	/**  
+	 *   
+	 */
+	private static final long serialVersionUID = 1L;
 	private  int chuanganqigeshu;
 	private  int pinlvcuowugeshu;
 	private  String plavg;

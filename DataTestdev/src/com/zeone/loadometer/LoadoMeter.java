@@ -1,5 +1,6 @@
 package com.zeone.loadometer;  
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -176,19 +177,27 @@ public class LoadoMeter {
 					.getVEHICLEWEIGHT());
 
 			double LIMITWEIGHT = LoadoMeterinfo.Stringtodouble(LoadoMeterBean
-					.getVEHICLEWEIGHT());
+					.getLIMITWEIGHT());
 
 			double OVERWEIGHT = LoadoMeterinfo.Stringtodouble(LoadoMeterBean
-					.getVEHICLEWEIGHT());
-
-			if (VEHICLEWEIGHT - LIMITWEIGHT != OVERWEIGHT) 
+					.getOVERWEIGHT());
+			
+			Double number=LIMITWEIGHT+OVERWEIGHT;
+			Double nnumber=VEHICLEWEIGHT;
+			DecimalFormat df = new DecimalFormat("0.00");
+			String CNY = df.format(number); // 6.20 这个是字符串，但已经是我要的两位小数了
+			number = Double.parseDouble(CNY); // 6.20
+			String C1NY = df.format(nnumber); // 6.20 这个是字符串，但已经是我要的两位小数了
+			nnumber = Double.parseDouble(C1NY); //
+			
+			if (number.equals(nnumber)) 
 			{
-				return false;
+				return true;
 
 			} 
 			else 
 			{
-				return true;
+				return false;
 			}
 
 		} 

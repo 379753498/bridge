@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class databaen implements Serializable{
 	
+	/**  
+	 *   
+	 */
+	private static final long serialVersionUID = 1L;
 	private String systime;
 	private String datetime;
 	private String level;

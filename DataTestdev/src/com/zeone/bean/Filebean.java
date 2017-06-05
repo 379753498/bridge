@@ -5,7 +5,11 @@ import java.io.Serializable;
 public class Filebean implements Serializable{
 
 	
-   	public String getFilename() {
+   	/**  
+	 *   
+	 */
+	private static final long serialVersionUID = 1L;
+	public String getFilename() {
 		return filename;
 	}
 	public void setFilename(String filename) {

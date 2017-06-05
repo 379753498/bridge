@@ -4,16 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.TreeMap;
-
 import com.zeone.Maths.Maths;
 import com.zeone.bean.SensorData;
 import com.zeone.bean.lingdianyangben;
-import com.zeone.data.databiud;
 import com.zeone.io.FileOperation;
-
 import com.zeone.jdbc.SensorService;
-import com.zeone.jdbc.databiudmysql;
 import com.zeone.txt.imp.FileFactoryReadimp;
 
 public class Filereadertest2 {

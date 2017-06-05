@@ -5,15 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import org.apache.commons.io.FileUtils;
-
-import com.zeone.excel.util.excel;
 import com.zeone.lifeline.collector.util.DateUtil;
 
 /**
@@ -84,7 +77,7 @@ public class FileOperation {
 	 * @param content
 	 * @return
 	 */
-	@SuppressWarnings("unused")
+	
 	public static boolean writeTxFile1(String content, String time, String a) {
 
 //		 if (true) {

@@ -4,14 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-import com.zeone.Maths.Maths;
 import com.zeone.bean.SensorData;
 import com.zeone.bean.bridgedatatestdpath;
-import com.zeone.bean.bridgetestbaobiao;
 import com.zeone.io.FileOperation;
 
 public class bridgedatatestdpathMysqlselect {

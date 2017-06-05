@@ -12,7 +12,7 @@ public class CollectorConfiguration extends Configuration{
 	private String hosts,host = "10.5.4.3";
 	private String password;
 	private int port = 6379;
-	private int timeout;
+//	private int timeout;
 	
 	public CollectorConfiguration(){
 		super.props.put(DEFAULT_SECTION, new ArrayList<KeyValue>());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 
+
 import com.zeone.bean.SensorData;
 import com.zeone.bean.bridgedatatestdpath;
 import com.zeone.jdbc.SensorService;
@@ -18,6 +19,7 @@ public class FindSJtd {
 
 	private static ArrayList<SensorData> SensorData = SensorService
 			.getAllSensorInfo();
+	@SuppressWarnings("unused")
 	private static ArrayList<bridgedatatestdpath> allshuju = bridgedatatestdpathMysqlselect
 			.getbridgedatatestdpathBean();
 
