@@ -34,7 +34,7 @@ public class FileFactoryReadimp implements FileFactoryRead {
 	static long nm = 1000 * 60;// 一分钟的毫秒数
 	static long ns = 1000;// 一秒钟的毫秒数long
 	ArrayList<String> filelist = new ArrayList<String>();
-	ArrayList<databaen> datab;
+	public ArrayList<databaen> datab;
 	private static Double Test;
 	private static Double Test1;
 	private static String datenow;

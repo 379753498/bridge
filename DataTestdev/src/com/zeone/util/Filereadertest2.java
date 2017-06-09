@@ -46,7 +46,7 @@ public class Filereadertest2 {
 	{
 		SensorData = SensorService.getAllSensorInfo();
 		System.out.println(date);
-		String path = "D://bridge";// 定义文件路径
+		String path = "D://bridgetestdemo";// 定义文件路径
 		filelist = fa.getfilenames(path);
 		System.out.println(filelist.size());
 		System.out.println("开始时间" + new Date());
