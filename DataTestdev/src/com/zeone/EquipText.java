@@ -14,15 +14,16 @@ import com.zeone.jdbc.SensorService;
 import com.zeone.lifeline.collector.util.DateUtil;
 import com.zeone.radis.RadisData;
 
-public class EquipText {
+public class EquipText<Static> {
 	/** 保存设备信息 */
-	private static List<SensorData> data = new ArrayList<SensorData>();
+	private static List<SensorData> data = SensorService.getAllSensorInfo();
+
 	/** 判断数据是否正常的时间依据（20分钟） */
 	private final static int INTEVAL = 1000 * 60 * 11;// 变更5分钟
 	/** 检查时间间隔（1小时） */
 	private final static int INSPECT_INTEVAL = 3600000;
 	private final static SimpleDateFormat sdf = new SimpleDateFormat(
-			"yyyy年MM月dd日HH时mm分ss秒");// 时间为样式的文件名称
+			"yyyy年MM月dd日");// 时间为样式的文件名称
 	static long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
 	static long nh = 1000 * 60 * 60;// 一小时的毫秒数
 	static long nm = 1000 * 60;// 一分钟的毫秒数
@@ -30,68 +31,57 @@ public class EquipText {
 	// 获得两个时间的毫秒时间差异
 	static String a;
 
+	// private final static String PATH = "D://bridge_equipment//";
 	/**
 	 * @param args
 	 */
 
-	public static void main(String[] args) 
-	{
-		data = SensorService.getAllSensorInfo();
 
-		RadisData radis = new RadisData();
 
-		Long pass = new Date().getTime();
+	public  void init() {
 
-		if (true) 
-		{
-			System.out.println("开始检查桥梁中断数据" + sdf.format(new Date()));
+			RadisData radis = new RadisData();
+			System.out.println("开始检查桥梁中断数据"+sdf.format(new Date()));
 			write(radis);
-			System.out.println("开始检查桥梁错误数据" + sdf.format(new Date()));
+			System.out.println("开始检查桥梁错误数据"+sdf.format(new Date()));
 			errorwrite(radis);
-			System.out.println("开始检查桥梁超频数据" + sdf.format(new Date()));
+			System.out.println("开始检查桥梁超频数据"+sdf.format(new Date()));
 			Frequency f = new Frequency();
 			f.test(radis);
-		}
-		while (true) 
-		{
-			try 
-			{
-				Thread.sleep(10000);
-			} catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
-
-			if ((new Date().getTime()) - pass >= INSPECT_INTEVAL) 
-			{
-				RadisData radia = new RadisData();
-				System.out.println("开始检查桥梁中断数据" + sdf.format(new Date()));
-				write(radia);
-				System.out.println("开始检查桥梁错误数据" + sdf.format(new Date()));
-				errorwrite(radia);
-				System.out.println("开始检查桥梁超频数据" + sdf.format(new Date()));
-				Frequency f = new Frequency();
-				f.test(radia);
-				pass = new Date().getTime();
-			}
-		}
+		
 	}
 
-	public static void write(RadisData radis) 
-	{
+	public static void write(RadisData radis) {
 		String time = sdf.format(new Date());
-		String prompt = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss")+ "中断数据检查结果：\n";
-		String prop = "桥梁名称" + "\t" + "传感器名称" + "\t" + "模块号" + "\t" + "通道号"+ "\t" + "数据采集时间" + "\t" + "采集值" + "\t" + "累计中断时间" + "\n";
+		String prompt = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss")
+				+ "中断数据检查结果：\n";
+		String prop = "桥梁名称" + "\t" + "传感器名称" + "\t" + "模块号" + "\t" + "通道号"
+				+ "\t" + "数据采集时间" + "\t" + "采集值" + "\t" + "累计中断时间" + "\n";
 		FileOperation.writeTxFile(prompt, time, "_中断数据");
 		FileOperation.writeTxFile(prop, time, "_中断数据");
-		for (int i = 0; i < data.size(); i++) 
-		{
+		for (int i = 0; i < data.size(); i++) {
 			SensorData s = data.get(i);
-			Map<String, String> value = radis.getEquipData(s.getGatewaynum(),s.getModularnum(), s.getPathnum());
+			
+			Map<String, String> value = radis.getEquipData(s.getGatewaynum(),
+					s.getModularnum(), s.getPathnum());
 			Long history = 0L;
 			Long pass = 0L;
-			if (value.get("time") != null) 
+			if(value.get("time")==null)
 			{
+				StringBuffer sb = new StringBuffer();
+				sb.append(s.getBridgename()).append("\t");
+				sb.append(s.getEquipmentname()).append("\t");
+				sb.append(s.getModularnum()).append("\t");
+				sb.append(s.getPathnum()).append("\t");
+				sb.append(
+						DateUtil.format(new Date(history),
+								"yyyy-MM-dd HH:mm:ss")).append("\t");
+				sb.append(value.get("value")).append("\t");
+				sb.append(a).append("\n");
+				FileOperation.writeTxFile(sb.toString(), time, "_没有接收到数据");	
+			}
+			
+			if (value.get("time") != null) {
 				history = Long.parseLong(value.get("time"));
 				pass = new Date().getTime() - history;
 				long day = pass / nd;// 计算差多少天
@@ -100,56 +90,87 @@ public class EquipText {
 				long sec = pass % nd % nh % nm / ns;// 计算差多少秒//输出结果
 				a = day + "天" + hour + "小时" + min + "分钟" + sec + "秒";
 			}
-			if (pass > INTEVAL) 
-			{
+			if (pass > INTEVAL) {
+
 				StringBuffer sb = new StringBuffer();
 				sb.append(s.getBridgename()).append("\t");
 				sb.append(s.getEquipmentname()).append("\t");
 				sb.append(s.getModularnum()).append("\t");
 				sb.append(s.getPathnum()).append("\t");
-				sb.append(DateUtil.format(new Date(history),"yyyy-MM-dd HH:mm:ss")).append("\t");
+				sb.append(
+						DateUtil.format(new Date(history),
+								"yyyy-MM-dd HH:mm:ss")).append("\t");
 				sb.append(value.get("value")).append("\t");
 				sb.append(a).append("\n");
 				FileOperation.writeTxFile(sb.toString(), time, "_中断数据");
 
 			}
+			
+//			else{
+//				StringBuffer sb = new StringBuffer();
+//				sb.append(s.getBridgename()).append("\t");
+//				sb.append(s.getEquipmentname()).append("\t");
+//				sb.append(s.getModularnum()).append("\t");
+//				sb.append(s.getPathnum()).append("\t");
+//				sb.append(
+//						DateUtil.format(new Date(history),
+//								"yyyy-MM-dd HH:mm:ss")).append("\t");
+//				sb.append(value.get("value")).append("\t");
+//				sb.append("正常数据").append("\n");
+//				FileOperation.writeTxFile(sb.toString(), time, "_中断数据");
+//				
+//			
+//			
+//			}
+			
+			
 		}
 		System.out.println("结束检查桥梁中断数据"+sdf.format(new Date()));
 	}
 
-	public static void errorwrite(RadisData radis) 
-	{
+	public static void errorwrite(RadisData radis) {
 		String time = sdf.format(new Date());
-		String prompt = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss")+ "超标数据检查结果：\n";
-		String prop = "桥梁名称" + "\t" + "传感器名称" + "\t" + "模块号" + "\t" + "通道号"+ "\t" + "数据采集时间" + "\t" + "采集值" + "\n";
+		String prompt = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss")
+				+ "超标数据检查结果：\n";
+		String prop = "桥梁名称" + "\t" + "传感器名称" + "\t" + "模块号" + "\t" + "通道号"
+				+ "\t" + "数据采集时间" + "\t" + "采集值" + "\n";
+
 		FileOperation.writeTxFile(prompt, time, "_超标数据");
 		FileOperation.writeTxFile(prop, time, "_超标数据");
-		for (int i = 0; i < data.size(); i++) 
-		{
+
+		for (int i = 0; i < data.size(); i++) {
 			SensorData s = data.get(i);
-			Map<String, String> value = radis.getEquipData(s.getGatewaynum(),s.getModularnum(), s.getPathnum());
+			Map<String, String> value = radis.getEquipData(s.getGatewaynum(),
+					s.getModularnum(), s.getPathnum());
+
 			find(s, value, time);
+
 		}
 		FileOperation.writeTxFile("\n\n\n\n", time, "_超标数据");
 		System.out.println("结束检查桥梁错误数据"+sdf.format(new Date()));
 
 	}
 
-	public static void find(SensorData s, Map<String, String> value, String time) 
-	{
+	public static void find(SensorData s, Map<String, String> value, String time) {
 
-		if (value.get("time") == null) 
-		{
-			System.out.println(s.getBridgename() + "\t" + value.get("value")+ "\t" + s.getEquipmentname() + "\t" + s.getModularnum()+ "\t" + s.getPathnum() + "\t"+ tablemaxmin.max_vlaue(s.getLeixing()) + "\t"+ tablemaxmin.min_vlaue(s.getLeixing()));
+		if (value.get("time") == null) {
+			System.out.println(s.getBridgename() + "\t" + value.get("value")
+					+ "\t" + s.getEquipmentname() + "\t" + s.getModularnum()
+					+ "\t" + s.getPathnum() + "\t"
+					+ tablemaxmin.max_vlaue(s.getLeixing()) + "\t"
+					+ tablemaxmin.min_vlaue(s.getLeixing()));
 
 		}
 
-		if (value.get("time") != null) 
-		{
+		if (value.get("time") != null) {
+
 			Double a = Double.valueOf(value.get("value"));
-			if (a > tablemaxmin.max_vlaue(s.getLeixing())|| a < tablemaxmin.min_vlaue(s.getLeixing())) 
-			{
+			// System.out.println(s.getBridgename()+"\t"+a+"\t"+s.getEquipmentname()+"\t"+tablemaxmin.max_vlaue(s.getLeixing())+"\t"+tablemaxmin.min_vlaue(s.getLeixing()));
+
+			if (a > tablemaxmin.max_vlaue(s.getLeixing())
+					|| a < tablemaxmin.min_vlaue(s.getLeixing())) {
 				tablemaxmin.Dowirte(s, value, time);
+				// System.out.println(s.getBridgename()+"\t"+a+"\t"+s.getEquipmentname()+"\t"+tablemaxmin.max_vlaue(s.getLeixing())+"\t"+tablemaxmin.min_vlaue(s.getLeixing()));
 
 			}
 		}

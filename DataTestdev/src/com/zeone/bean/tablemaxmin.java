@@ -173,11 +173,11 @@ public class tablemaxmin {
 		}
 		if (Sensortype.equals(windSpeed)) {
 
-			return  10;
+			return  1;
 		}
 		if (Sensortype.equals(windDirection)) {
 
-			return 10;
+			return 1;
 		}
 
 		if (Sensortype.equals(StaticDeflection)) {

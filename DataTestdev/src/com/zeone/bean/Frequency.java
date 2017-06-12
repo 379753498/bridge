@@ -17,7 +17,7 @@ import com.zeone.radis.RadisData;
 
 public class Frequency {
 	private final static SimpleDateFormat sdf = new SimpleDateFormat(
-			"yyyy年MM月dd日HH时mm分ss秒");
+			"yyyy年MM月dd日");
 	private static List<SensorData> data = new ArrayList<SensorData>();
 
 	public void test(RadisData Radis) {

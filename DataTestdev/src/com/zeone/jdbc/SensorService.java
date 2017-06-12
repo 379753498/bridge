@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
+
 import com.zeone.bean.SensorData;
 /**
  * 数据库相关操作
@@ -26,7 +27,7 @@ public class SensorService {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
-		String sql = "select bridge.bridgename, a.equipmentid, a.equipmentname, a.device_position, b.gatewaynum, b.modularnum, b.pathnum, mon.monproject from bas_equipment a left join MAM_IOTDNSCFG b on a.equipmentid = b.equipmentid and a.monprojectid = b.monprojectid left join bas_bridge bridge on a.bridgeid = bridge.bridgeid left join mon_monproject mon on a.monprojectid = mon.monprojectid where b.gatewaynum is not null order by bridge.bridgename, a.monprojectid";
+		String sql = "select bridge.bridgename, a.equipmentid, a.equipmentname, a.device_position, b.gatewaynum, b.modularnum, b.pathnum, mon.monproject from bas_equipment a left join MAM_IOTDNSCFG b on a.equipmentid = b.equipmentid and a.monprojectid = b.monprojectid left join bas_bridge bridge on a.bridgeid = bridge.bridgeid left join mon_monproject mon on a.monprojectid = mon.monprojectid where b.gatewaynum is not null and mon.monproject !='地磅' order by bridge.bridgename, a.monprojectid";
 		try {
 			conn = JdbcFactory.getConnection();
 			stmt = conn.prepareStatement(sql);
