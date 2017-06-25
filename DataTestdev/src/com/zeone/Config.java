@@ -2,4 +2,8 @@ package com.zeone;
 
 public class Config {
 
-}11
+	
+	public static void main(String[] args) {
+		
+	}
+}
