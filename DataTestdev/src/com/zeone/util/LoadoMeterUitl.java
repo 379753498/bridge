@@ -14,7 +14,7 @@ public class LoadoMeterUitl {
 	public static void main(String[] args) {
 		CheckLoadoMeterImp checkloadometer = new CheckLoadoMeterImp();
 		checkloadometer.write();
-		String[] getdate = getdate(100);
+		String[] getdate = getdate(40);
 		for (int i = 0; i < getdate.length; i++) {
 			checkloadometer.init(getdate[i]);
 

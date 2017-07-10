@@ -4,6 +4,16 @@ import java.io.Serializable;
 
 public class SensorData implements Serializable {
 
+	@Override
+	public String toString() {
+		return "SensorData [bridgename=" + bridgename + ", equipmentid="
+				+ equipmentid + ", equipmentname=" + equipmentname
+				+ ", devicePosition=" + devicePosition + ", gatewaynum="
+				+ gatewaynum + ", modularnum=" + modularnum + ", pathnum="
+				+ pathnum + ", leixing=" + leixing + ", filepath=" + filepath
+				+ ", filerow=" + filerow + "]";
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private String bridgename;

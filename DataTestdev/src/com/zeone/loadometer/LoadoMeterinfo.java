@@ -58,7 +58,7 @@ public class LoadoMeterinfo {
 	 * @Description:
 	 */
 	public static double VEHICLEWEIGHTmax() {
-		return 100;
+		return 75;
 
 	}
 
