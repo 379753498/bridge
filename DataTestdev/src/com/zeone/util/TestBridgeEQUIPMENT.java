@@ -12,8 +12,7 @@ public class TestBridgeEQUIPMENT {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		ArrayList<Sensordata14> allSensordata14 = SensorService
-				.getAllSensordata14();
+		ArrayList<Sensordata14> allSensordata14 = SensorService.getAllSensordata14();
 
 		Thread.sleep(3000);
 		ArrayList<SensorData> allSensorInfo = SensorService.getAllSensorInfo();
