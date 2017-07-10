@@ -84,8 +84,7 @@ public class SensorService {
 				s.setEquipmentname(rs.getString("equipmentname"));
 				s.setDevice_Position(rs.getString("device_position"));
 				s.setGatewaynum(rs.getString("Parent_Id"));
-				s.setModularnum(rs.getString("modularnum"));
-				s.setPathnum(rs.getString("pathnum"));
+			
 				s.setManufacturer(rs.getString("Manufacturer"));
 				s.setLeixing(rs.getString("tname"));
 				
