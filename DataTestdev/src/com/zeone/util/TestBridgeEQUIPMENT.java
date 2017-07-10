@@ -42,14 +42,17 @@ public class TestBridgeEQUIPMENT {
 
 				flag=1;
 			}
+			
 			if(flag==1)
 			{
+				
 				System.out.println(s.toString());
 				flag=0;
 			}
 
 		}
-
+		System.out.println(i);
+		System.out.println(allSensorInfo.size());
 	}
 
 }
