@@ -71,9 +71,9 @@ public class SensorService {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
-		String sql = "select bridge.bridgename ,CGQ.EQUIPMENTID,CGQ.equipmentname,CGQ.Parent_Id ,CGQ.Device_Position , CGQ.Manufacturer ,shebeicanshubiao.sensor_code ,zidian.tname   from PLAT_BAS_EQUIPMENT CGQ    left join PLAT_BAS_EQUIPCONFIG shebeicanshubiao       on CGQ.Equipmentid = shebeicanshubiao.Equip_Id     left join PLAT_BAS_BRIDGE bridge  on bridge.BRIDGEID = shebeicanshubiao.BUILD_ID     left join PLAT_BAS_DICTIONARY zidian   on CGQ.Equiptype = zidian.TID   where CGQ.Sys_Flag = 'bridge' and bridge.bridgename  in ('金寨路高架','环巢湖路南淝河大桥','派河大桥','繁华大道跨南淝河大桥','206立交桥') and  shebeicanshubiao.sensor_code is not null and CGQ.Parent_Id  is not null order by bridge.bridgename ";
+		String sql = "select bridge.bridgename ,CGQ.EQUIPMENTID,CGQ.equipmentname,CGQ.Parent_Id ,CGQ.Device_Position , CGQ.Manufacturer ,shebeicanshubiao.sensor_code ,zidian.tname   from PLAT_BAS_EQUIPMENT CGQ    left join PLAT_BAS_EQUIPCONFIG shebeicanshubiao       on CGQ.Equipmentid = shebeicanshubiao.Equip_Id     left join PLAT_BAS_BRIDGE bridge  on bridge.BRIDGEID = shebeicanshubiao.BUILD_ID     left join PLAT_BAS_DICTIONARY zidian   on CGQ.Equiptype = zidian.TID   where CGQ.Sys_Flag = 'bridge' and shebeicanshubiao.point_flag='bridge'  and bridge.bridgename  in ('金寨路高架','环巢湖路南淝河大桥','派河大桥','繁华大道跨南淝河大桥','206立交桥') and  shebeicanshubiao.sensor_code is not null and CGQ.Parent_Id  is not null order by bridge.bridgename ";
 		try {
-			conn = JdbcFactory.getConnection14();
+			conn = JdbcFactory.getConnection15();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
