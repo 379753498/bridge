@@ -89,9 +89,17 @@ public class SensorService {
 				s.setLeixing(rs.getString("tname"));
 				
 				String a= rs.getString("sensor_code");
+				
+				if(a.contains("_"))
+				{
 				s.setModularnum(getModularnum(a));
 				s.setPathnum(getpathnum(a));
-				
+				}
+				else
+				{
+					s.setModularnum("null");
+					s.setPathnum("null");
+				}
 				data.add(s);
 				
 				
@@ -108,6 +116,7 @@ public class SensorService {
 	
 	
 	public static String getModularnum( String s)
+	
 	{
 		String[] split = s.split("_");
 		

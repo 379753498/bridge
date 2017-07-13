@@ -27,4 +27,19 @@ public class JdbcFactory {
 		System.out.println("连接成功！");
 		return conn;
 	}
+	
+	
+	
+	
+	public static Connection getConnection15() throws ClassNotFoundException, SQLException{
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		String url = "jdbc:oracle:thin:@10.5.4.15:1521:LIFELINE";
+		String user = "SCDPLATFORM";
+		String pass = "SCDPLATFORM";
+		Connection conn = DriverManager.getConnection(url, user, pass);
+		
+	
+		System.out.println("连接成功！");
+		return conn;
+	}
 }

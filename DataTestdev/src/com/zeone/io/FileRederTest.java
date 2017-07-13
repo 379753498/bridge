@@ -154,7 +154,7 @@ public class FileRederTest {
 
 
 		System.out.println(date);
-		String path = "D://bridge";// 定义文件路径
+		String path = "D://test";// 定义文件路径
 //		String path = "Z://"+date+"//bridge";// 定义文件路径
 		filelist = fa.getfilenames(path);
 		System.out.println(filelist.size());
