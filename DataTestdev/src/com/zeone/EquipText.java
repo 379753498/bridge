@@ -84,7 +84,11 @@ public class EquipText {
 				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
 				break;
 			}
-			else if(mialBean.getPass()>1000*60*60)//大于一个小时的发给哪些人
+				
+		}
+		for (MialBean mialBean : mail) {
+		
+		 if(mialBean.getPass()>1000*60*60)//大于一个小时的发给哪些人
 			{
 				
 				Session sessioninit = Mailutil.Sessioninit();
@@ -93,9 +97,7 @@ public class EquipText {
 				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getoneAddress());
 				break;	
 			}
-					
 		}
-		
 		
 		
 	}
