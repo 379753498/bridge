@@ -74,33 +74,42 @@ public class EquipText {
 	
 	public static void SendMail(ArrayList<MialBean>  mail) throws UnsupportedEncodingException, Exception
 	{
+		int flag=0;
+		int oneflag=0;
 		
 		for (MialBean mialBean : mail) {
-			if(mialBean.getPass()>1000*60*60*5)//大于5小时的发送给哪些人
+			if(mialBean.getPass()>1000*60*60*10)//大于5小时的发送给哪些人
 			{
-				Session sessioninit = Mailutil.Sessioninit();
+				flag++;
 				
-				MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
-				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
-				break;
 			}
-				
-		}
-		for (MialBean mialBean : mail) {
-		
-		 if(mialBean.getPass()>1000*60*60)//大于一个小时的发给哪些人
+			
+			if(flag>10)
 			{
-				
 				Session sessioninit = Mailutil.Sessioninit();
-				
 				MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
 				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getoneAddress());
-				break;	
+				break;
 			}
+			 if(mialBean.getPass()>1000*60*60)//大于一个小时的发给哪些人
+				{
+				 oneflag++;
+					
+				}
+			 
+			 if(oneflag>20)
+			 {
+				 Session sessioninit = Mailutil.Sessioninit();
+					
+					MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
+					Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
+					break;	
+			 }
+			 
+			}
+				
 		}
-		
-		
-	}
+	
 	
 	
 	
