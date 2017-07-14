@@ -115,7 +115,7 @@ public class Mailutil {
     
     
     
-    public static MimeMessage createMimeMessages(Session session ,ArrayList<databiud> datatest) throws Exception {
+    public static MimeMessage createMimeMessages(Session session ,ArrayList<databiud> datatest, String date) throws Exception {
         // 1. 创建一封邮件
         MimeMessage message = new MimeMessage(session);
 
@@ -126,7 +126,7 @@ public class Mailutil {
 //        message.setRecipients(MimeMessage.RecipientType.TO, Address);
 
         // 4. Subject: 邮件主题
-        message.setSubject("桥梁历史数据检测分析结果"+DateUtil.format(new Date(),	"yyyy-MM-dd HH:mm:ss"), "UTF-8");
+        message.setSubject("关于"+date+"桥梁历史数据检测分析结果"+"----"+DateUtil.format(new Date(),	"yyyy-MM-dd HH:mm:ss")+"检测完成", "UTF-8");
 
         // 5. Content: 邮件正文（可以使用html标签）
         message.setContent(getContentx(datatest).toString(), "text/html;charset=UTF-8");
