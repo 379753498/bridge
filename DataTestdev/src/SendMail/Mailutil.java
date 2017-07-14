@@ -187,7 +187,7 @@ public class Mailutil {
     
     public static Address[] getoneAddress() throws UnsupportedEncodingException
     {
-    	Address[] addre = new Address[7];
+    	Address[] addre = new Address[9];
     	addre[0]=new InternetAddress("chuzhujun@gsafety.com",  "UTF-8");
     	addre[1]=new InternetAddress("xujian_anhui@gsafety.com",  "UTF-8");
     	addre[2]=new InternetAddress("huangzhuanzhuan@gsafety.com",  "UTF-8");
