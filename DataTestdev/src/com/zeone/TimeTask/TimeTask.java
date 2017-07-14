@@ -12,7 +12,12 @@ public class TimeTask  extends TimerTask{
 		
 		// TODO Auto-generated method stub  
 		System.out.println(new Date()+"开始时间");
-		ex.init();
+		try {
+			ex.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block  
+			e.printStackTrace();
+		}
 		System.out.println(new Date()+"结束时间");
 	}
 
