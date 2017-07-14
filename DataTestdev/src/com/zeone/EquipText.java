@@ -65,12 +65,11 @@ public class EquipText {
 
 	}
 
-	public static void SendMail(ArrayList<MialBean> mail)
-			throws UnsupportedEncodingException, Exception {
+	public static void SendMail(ArrayList<MialBean> mail)throws UnsupportedEncodingException, Exception {
 		int stratus = 0;
 		int flag = 0;
 		int oneflag = 0;
-
+//遍历获取中断超过5小时的个数
 		for (MialBean mialBean : mail) {
 			if (mialBean.getPass() > 1000 * 60 * 60 * 10)// 大于5小时的发送给哪些人
 			{
