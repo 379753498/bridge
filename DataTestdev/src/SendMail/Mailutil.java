@@ -38,8 +38,7 @@ public class Mailutil {
 
 	public static void Send(Session session ,MimeMessage msg  ,Address Address[]) throws MessagingException,
 		AddressException, NoSuchProviderException {
-	
-
+			msg.setRecipients(MimeMessage.RecipientType.TO, Address);
           Transport transport = session.getTransport();
           transport.connect(myEmailSMTPHost, myEmailAccount, myEmailPassword);
           transport.sendMessage(msg, Address );
@@ -202,7 +201,8 @@ public class Mailutil {
     	addre[3]=new InternetAddress("xulei@gsafety.com",  "UTF-8");
     	addre[4]=new InternetAddress("huangwenshi@gsafety.com",  "UTF-8");
     	addre[5]=new InternetAddress("zhangxiaoxia@gsafety.com",  "UTF-8");
-    	addre[6]=new InternetAddress("379753498@qq.com",  "UTF-8");
+    	addre[6]=new InternetAddress("chengxueming@gsafety.com",  "UTF-8");
+    	addre[7]=new InternetAddress("wangshouren@gsafety.com",  "UTF-8");
     	
 		return addre;
     	
