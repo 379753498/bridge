@@ -10,7 +10,7 @@ public class MyTimer {
 	public static void main(String[] args) {
 		
 		TimerTask ts =new TimeTask();
-		AutozhixingMethood(ts,0,1000);
+		AutozhixingMethood(ts,0,1000*60*60);
 		
 	}
 /**
