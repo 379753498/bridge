@@ -14,11 +14,25 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import com.sun.mail.util.MailSSLSocketFactory;
 import com.zeone.bean.MialBean;
+import com.zeone.data.databiud;
 import com.zeone.lifeline.collector.util.DateUtil;
 
+
+
+
+
+
 public class Mailutil {
+	
+	public static final String tdBegin="<td border="+"1"+">";
+	public static final String tdEnd="</td border="+"1"+">";
+	public static final String tRBegin="<tr>";
+	public static final String tREnd="</tr>";
+	public static final String tHBegin="<th border="+"1"+">";
+	public static final String tHEnd="</th border="+"1"+">";
 	// 发件人的 邮箱 和 密码（替换为自己的邮箱和密码）
     // PS: 某些邮箱服务器为了增加邮箱本身密码的安全性，给 SMTP 客户端设置了独立密码（有的邮箱称为“授权码”）, 
     //     对于开启了独立密码的邮箱, 这里的邮箱密码必需使用这个独立密码（授权码）。
@@ -100,6 +114,34 @@ public class Mailutil {
 
     
     
+    
+    public static MimeMessage createMimeMessages(Session session ,ArrayList<databiud> datatest) throws Exception {
+        // 1. 创建一封邮件
+        MimeMessage message = new MimeMessage(session);
+
+        // 2. From: 发件人
+        message.setFrom(new InternetAddress(myEmailAccount, "徐健", "UTF-8"));
+
+        // 3. To: 收件人（可以增加多个收件人、抄送、密送）
+//        message.setRecipients(MimeMessage.RecipientType.TO, Address);
+
+        // 4. Subject: 邮件主题
+        message.setSubject("桥梁历史数据监测结果"+DateUtil.format(new Date(),	"yyyy-MM-dd HH:mm:ss"), "UTF-8");
+
+        // 5. Content: 邮件正文（可以使用html标签）
+        message.setContent(getContentx(datatest).toString(), "text/html;charset=UTF-8");
+        // 6. 设置发件时间
+        message.setSentDate(new Date());
+
+        // 7. 保存设置
+        message.saveChanges();
+
+        return message;
+    }
+
+    
+    
+    
     public static StringBuffer getContent(ArrayList<MialBean> ls)
     {
     	StringBuffer sb= new StringBuffer();
@@ -174,6 +216,156 @@ public class Mailutil {
     }
     
     
+    
+    
+    
+    
+    
+    
+    public static StringBuffer getContentx(ArrayList<databiud> datatest)
+    {
+    	StringBuffer sb= new StringBuffer();
+    	sb.append("<html>");
+    	sb.append("<body>");
+    	
+    	sb.append("下表是来历史分析系统分析结果请查阅、详细资料可想我索要");
+    	
+    	sb.append("<table border="+"1"+">");
+    	
+    	
+    	sb.append(Mailutil.tRBegin);
+    	sb.append(Mailutil.tHBegin);
+    	sb.append("桥梁名称");
+    	sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("传感器名称");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("传感器类型");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("模块号");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("通道号");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("实际数据行数");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("理论数据行数");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("理论频率");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("错误频率数" );
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("错误频率占比");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("中断数据次数");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("累计中断时间");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("累计中断时间占比");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("重复数据个数");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("重复数据占比" );
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("超出量程范围数据个数");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("超出量程范围数据占比");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("数据接收异常数据总数");
+		sb.append(Mailutil.tHEnd);
+    	sb.append(Mailutil.tHBegin);
+		sb.append("数据接收异常数据总数占比");
+		sb.append(Mailutil.tHEnd);
+		sb.append(Mailutil.tREnd);
+    
+    	for (databiud databiud : datatest) {
+    		sb.append(Mailutil.tRBegin);
+    		sb.append(Mailutil.tdBegin);
+    		sb.append(databiud.getBridgename());
+    		sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getEquipmentname());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getLeixing());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getModularnum());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getPathnum());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getFilerow());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getLilunfilerow());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getLilunpl());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getPl());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getCuowuPLzhanbi());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getZhongduanshuju());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getZhongduanshijian());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getLeijizhongduanshijianzhanbi());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getChongfushujugeshu());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getChongfushujzhanbi());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getChaochuliangchenggeshu());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getChaochuliangchengfanweizhanbi());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getShujujieshoushijianyichangzongshu());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdBegin);
+			sb.append(databiud.getJieshouyichangzongshuzhanbi());
+			sb.append(Mailutil.tdEnd);
+    		sb.append(Mailutil.tdEnd);
+		}
+    	    	    	    	
+    	sb.append("</table>");
+    	sb.append("</body>");
+    	sb.append("</html>");
+    	
+		return sb;
+    	
+    	
+    	
+    }
+    
+    
     public static Address[] getAddress() throws UnsupportedEncodingException
     {
     	Address[] addre = new Address[1];
@@ -184,6 +376,18 @@ public class Mailutil {
     	
     	
     }
+    
+    public static Address[] getAddres() throws UnsupportedEncodingException
+    {
+    	Address[] addre = new Address[1];
+    	
+    	
+    	addre[0]=new InternetAddress("379753498@qq.com",  "UTF-8");
+		return addre;
+    	
+    	
+    }
+    
     
     public static Address[] getoneAddress() throws UnsupportedEncodingException
     {
