@@ -1,12 +1,20 @@
 package com.zeone;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+
+import SendMail.Mailutil;
+
 import com.zeone.bean.Frequency;
+import com.zeone.bean.MialBean;
 import com.zeone.bean.SensorData;
 import com.zeone.bean.tablemaxmin;
 import com.zeone.io.FileOperation;
@@ -14,16 +22,20 @@ import com.zeone.jdbc.SensorService;
 import com.zeone.lifeline.collector.util.DateUtil;
 import com.zeone.radis.RadisData;
 
+import examples.Main;
+
 public class EquipText {
 	/** 保存设备信息 */
 	private static List<SensorData> data = SensorService.getAllSensorInfo();
 
-	/** 判断数据是否正常的时间依据（20分钟） */
+	/** 判断数据是否正常的时间依据（11分钟） */
 	private final static int INTEVAL = 1000 * 60 * 11;// 变更5分钟
 	/** 检查时间间隔（1小时） */
 	private final static int INSPECT_INTEVAL = 3600000;
 	private final static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy年MM月dd日");// 时间为样式的文件名称
+
+	private static final ArrayList<MialBean> MialBean = null;
 	static long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
 	static long nh = 1000 * 60 * 60;// 一小时的毫秒数
 	static long nm = 1000 * 60;// 一分钟的毫秒数
@@ -34,15 +46,23 @@ public class EquipText {
 	// private final static String PATH = "D://bridge_equipment//";
 	/**
 	 * @param args
+	 * @throws Exception 
+	 * @throws UnsupportedEncodingException 
 	 */
 
 
 
-	public  void init() {
+	public  void init() throws UnsupportedEncodingException, Exception {
 
 			RadisData radis = new RadisData();
 			System.out.println("开始检查桥梁中断数据"+sdf.format(new Date()));
-			write(radis);
+			ArrayList<MialBean> write = write(radis);
+			if(write.size()>0)
+			{
+				SendMail(write);
+			}
+			
+			
 			System.out.println("开始检查桥梁错误数据"+sdf.format(new Date()));
 			errorwrite(radis);
 			System.out.println("开始检查桥梁超频数据"+sdf.format(new Date()));
@@ -50,8 +70,42 @@ public class EquipText {
 			f.test(radis);
 		
 	}
+	
+	
+	public static void SendMail(ArrayList<MialBean>  mail) throws UnsupportedEncodingException, Exception
+	{
+		
+		for (MialBean mialBean : mail) {
+			if(mialBean.getPass()>1000*60*60*5)//大于5小时的发送给哪些人
+			{
+				Session sessioninit = Mailutil.Sessioninit();
+				
+				MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
+				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
+				break;
+			}
+			else if(mialBean.getPass()>1000*60*60)//大于一个小时的发给哪些人
+			{
+				
+				Session sessioninit = Mailutil.Sessioninit();
+				
+				MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
+				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getoneAddress());
+				break;	
+			}
+					
+		}
+		
+		
+		
+	}
+	
+	
+	
 
-	public static void write(RadisData radis) {
+	public static ArrayList<MialBean> write(RadisData radis) {
+		ArrayList<MialBean> arrlyMial= new ArrayList<MialBean>();
+	
 		String time = sdf.format(new Date());
 		String prompt = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss")
 				+ "中断数据检查结果：\n";
@@ -97,13 +151,19 @@ public class EquipText {
 				sb.append(s.getEquipmentname()).append("\t");
 				sb.append(s.getModularnum()).append("\t");
 				sb.append(s.getPathnum()).append("\t");
-				sb.append(
-						DateUtil.format(new Date(history),
-								"yyyy-MM-dd HH:mm:ss")).append("\t");
+				sb.append(DateUtil.format(new Date(history),"yyyy-MM-dd HH:mm:ss")).append("\t");
 				sb.append(value.get("value")).append("\t");
 				sb.append(a).append("\n");
 				FileOperation.writeTxFile(sb.toString(), time, "_中断数据");
-
+				
+				MialBean mail=new MialBean();
+				mail.setSensorData(s);
+				mail.setPass(pass);
+				mail.setHistory(history);
+				mail.setVaule(value.get("value"));
+				mail.setPassString(a);
+				
+				arrlyMial.add(mail);
 			}
 			
 //			else{
@@ -126,6 +186,7 @@ public class EquipText {
 			
 		}
 		System.out.println("结束检查桥梁中断数据"+sdf.format(new Date()));
+		return arrlyMial;
 	}
 
 	public static void errorwrite(RadisData radis) {
