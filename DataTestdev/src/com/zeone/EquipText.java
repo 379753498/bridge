@@ -14,7 +14,7 @@ import com.zeone.jdbc.SensorService;
 import com.zeone.lifeline.collector.util.DateUtil;
 import com.zeone.radis.RadisData;
 
-public class EquipText<Static> {
+public class EquipText {
 	/** 保存设备信息 */
 	private static List<SensorData> data = SensorService.getAllSensorInfo();
 
