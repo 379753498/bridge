@@ -28,6 +28,7 @@
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.16.jar"/>
 	<classpathentry kind="lib" path="lib/poi-scratchpad-3.16.jar"/>
 	<classpathentry kind="lib" path="lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail-1.5.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 	<referencedentry kind="lib" path="lib/commons-net-3.6.jar" sourcepath="lib/commons-net-3.6-sources.jar"/>
