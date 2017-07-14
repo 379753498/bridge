@@ -120,7 +120,7 @@ public class FileOperation {
 		 }
 
 		date = DateUtil.format(new Date(), "yyyy-MM-dd");
-		PATH = "C://bridge_equipment//" + date + "//";// 根路径
+		PATH = "C://bridge_equipment//" + date +"桥梁数据检测汇总"+ "//";// 根路径
 		File file = createFile(PATH + time + a + ".txt");
 
 		if (file == null) {

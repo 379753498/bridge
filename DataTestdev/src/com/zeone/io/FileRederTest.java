@@ -4,6 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+
+import SendMail.Mailutil;
+
 import com.zeone.bean.SensorData;
 import com.zeone.data.databiud;
 import com.zeone.jdbc.SensorService;
@@ -82,6 +88,13 @@ public class FileRederTest {
 				FileOperation.writeTxFile(sb.toString(), date, "实时值分析数据汇总");
 
 			}
+			
+			Session sessioninit = Mailutil.Sessioninit();
+			MimeMessage createMimeMessage = Mailutil.createMimeMessages(sessioninit, FileFactoryReadimp.datatest);
+			Mailutil.Send(sessioninit, createMimeMessage,Mailutil.getAddres());
+			
+			
+			
 
 		}
 		StringBuffer sb22 = new StringBuffer();
@@ -154,7 +167,7 @@ public class FileRederTest {
 
 
 		System.out.println(date);
-		String path = "D://test";// 定义文件路径
+		String path = "D://bridge";// 定义文件路径
 //		String path = "Z://"+date+"//bridge";// 定义文件路径
 		filelist = fa.getfilenames(path);
 		System.out.println(filelist.size());
