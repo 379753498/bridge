@@ -42,19 +42,19 @@ public class Util {
 			s[2] = "金寨路高架";
 			s[3] = "派河大桥";
 			s[4] = "206立交桥";
-			
-			 FileRederTest fs = new FileRederTest();
-			 date = fs.init();
-			 if (date == null) {
-			 date = sdf.format(new Date().getTime() - 1 * 24 * 60 * 60
-			 * 1000);
-			 }
-			 databiudmysql da = new databiudmysql();
-			
-			 for (int i = 0; i < s.length; i++) {
-			 da.testbaobiao(s[i], date, "bridgedatatestdev");
-			 da.testbaobiao(s[i], date, "bridgedatatestdevtz");
-			 }
+
+			FileRederTest fs = new FileRederTest();
+			date = fs.init();
+			if (date == null) {
+				date = sdf.format(new Date().getTime() - 1 * 24 * 60 * 60
+						* 1000);
+			}
+			databiudmysql da = new databiudmysql();
+
+			for (int i = 0; i < s.length; i++) {
+				da.testbaobiao(s[i], date, "bridgedatatestdev");
+				da.testbaobiao(s[i], date, "bridgedatatestdevtz");
+			}
 
 			ArrayList<SensorData> allSensorInfo = SensorService
 					.getAllSensorInfo();
@@ -88,8 +88,7 @@ public class Util {
 
 			for (BeanWtihResult beanWtihResult : allBeanWtihResult) {
 
-				if (s1.getBridgename().equals(
-								beanWtihResult.getBridgename())
+				if (s1.getBridgename().equals(beanWtihResult.getBridgename())
 						&& s1.getModularnum().equals(
 								beanWtihResult.getModularnum())
 						&& s1.getPathnum().equals(beanWtihResult.getPathnum()))
@@ -97,9 +96,8 @@ public class Util {
 				{
 					flag = 1;
 					break;
-				}
-				else{
-				flag = 3;
+				} else {
+					flag = 3;
 				}
 			}
 			if (flag == 3) {
