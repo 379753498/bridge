@@ -1,7 +1,6 @@
 package com.zeone;
 
 import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +21,6 @@ import com.zeone.jdbc.SensorService;
 import com.zeone.lifeline.collector.util.DateUtil;
 import com.zeone.radis.RadisData;
 
-import examples.Main;
 
 public class EquipText {
 	/** 保存设备信息 */
@@ -31,11 +29,11 @@ public class EquipText {
 	/** 判断数据是否正常的时间依据（11分钟） */
 	private final static int INTEVAL = 1000 * 60 * 11;// 变更5分钟
 	/** 检查时间间隔（1小时） */
-	private final static int INSPECT_INTEVAL = 3600000;
+//	private final static int INSPECT_INTEVAL = 3600000;
 	private final static SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy年MM月dd日");// 时间为样式的文件名称
 
-	private static final ArrayList<MialBean> MialBean = null;
+//	private static final ArrayList<MialBean> MialBean = null;
 	static long nd = 1000 * 24 * 60 * 60;// 一天的毫秒数
 	static long nh = 1000 * 60 * 60;// 一小时的毫秒数
 	static long nm = 1000 * 60;// 一分钟的毫秒数
@@ -46,77 +44,69 @@ public class EquipText {
 	// private final static String PATH = "D://bridge_equipment//";
 	/**
 	 * @param args
-	 * @throws Exception 
-	 * @throws UnsupportedEncodingException 
+	 * @throws Exception
+	 * @throws UnsupportedEncodingException
 	 */
 
+	public void init() throws UnsupportedEncodingException, Exception {
 
+		RadisData radis = new RadisData();
+		System.out.println("开始检查桥梁中断数据" + sdf.format(new Date()));
+		ArrayList<MialBean> write = write(radis);
+		if (write.size() > 0) {
+			SendMail(write);
+		}
 
-	public  void init() throws UnsupportedEncodingException, Exception {
+		System.out.println("开始检查桥梁错误数据" + sdf.format(new Date()));
+		errorwrite(radis);
+		System.out.println("开始检查桥梁超频数据" + sdf.format(new Date()));
+		Frequency f = new Frequency();
+		f.test(radis);
 
-			RadisData radis = new RadisData();
-			System.out.println("开始检查桥梁中断数据"+sdf.format(new Date()));
-			ArrayList<MialBean> write = write(radis);
-			if(write.size()>0)
-			{
-				SendMail(write);
-			}
-			
-			
-			System.out.println("开始检查桥梁错误数据"+sdf.format(new Date()));
-			errorwrite(radis);
-			System.out.println("开始检查桥梁超频数据"+sdf.format(new Date()));
-			Frequency f = new Frequency();
-			f.test(radis);
-		
 	}
-	
-	
-	public static void SendMail(ArrayList<MialBean>  mail) throws UnsupportedEncodingException, Exception
-	{
-		int flag=0;
-		int oneflag=0;
-		
+
+	public static void SendMail(ArrayList<MialBean> mail)
+			throws UnsupportedEncodingException, Exception {
+		int stratus = 0;
+		int flag = 0;
+		int oneflag = 0;
+
 		for (MialBean mialBean : mail) {
-			if(mialBean.getPass()>1000*60*60*10)//大于5小时的发送给哪些人
+			if (mialBean.getPass() > 1000 * 60 * 60 * 10)// 大于5小时的发送给哪些人
 			{
 				flag++;
-				
+
 			}
-			
-			if(flag>10)
+
+			if (mialBean.getPass() > 1000 * 60 * 60)// 大于一个小时的发给哪些人
 			{
-				Session sessioninit = Mailutil.Sessioninit();
-				MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
-				Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getoneAddress());
-				break;
+				oneflag++;
+
 			}
-			 if(mialBean.getPass()>1000*60*60)//大于一个小时的发给哪些人
-				{
-				 oneflag++;
-					
-				}
-			 
-			 if(oneflag>20)
-			 {
-				 Session sessioninit = Mailutil.Sessioninit();
-					
-					MimeMessage createMimeMessage = Mailutil.createMimeMessage(sessioninit, mail);
-					Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
-					break;	
-			 }
-			 
-			}
-				
+
 		}
-	
-	
-	
-	
+
+		if (flag > 10) {
+			Session sessioninit = Mailutil.Sessioninit();
+			MimeMessage createMimeMessage = Mailutil.createMimeMessage(
+					sessioninit, mail);
+			Mailutil.Send(sessioninit, createMimeMessage,
+					Mailutil.getoneAddress());
+			stratus = 1;
+		} else if (oneflag > 20 && stratus == 0) {
+			Session sessioninit = Mailutil.Sessioninit();
+
+			MimeMessage createMimeMessage = Mailutil.createMimeMessage(
+					sessioninit, mail);
+			Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
+			stratus = 0;
+		}
+
+	}
 
 	public static ArrayList<MialBean> write(RadisData radis) {
-		ArrayList<MialBean> arrlyMial= new ArrayList<MialBean>();
-	
+		ArrayList<MialBean> arrlyMial = new ArrayList<MialBean>();
+
 		String time = sdf.format(new Date());
 		String prompt = DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss")
 				+ "中断数据检查结果：\n";
@@ -126,13 +116,12 @@ public class EquipText {
 		FileOperation.writeTxFile(prop, time, "_中断数据");
 		for (int i = 0; i < data.size(); i++) {
 			SensorData s = data.get(i);
-			
+
 			Map<String, String> value = radis.getEquipData(s.getGatewaynum(),
 					s.getModularnum(), s.getPathnum());
 			Long history = 0L;
 			Long pass = 0L;
-			if(value.get("time")==null)
-			{
+			if (value.get("time") == null) {
 				StringBuffer sb = new StringBuffer();
 				sb.append(s.getBridgename()).append("\t");
 				sb.append(s.getEquipmentname()).append("\t");
@@ -143,9 +132,9 @@ public class EquipText {
 								"yyyy-MM-dd HH:mm:ss")).append("\t");
 				sb.append(value.get("value")).append("\t");
 				sb.append(a).append("\n");
-				FileOperation.writeTxFile(sb.toString(), time, "_没有接收到数据");	
+				FileOperation.writeTxFile(sb.toString(), time, "_没有接收到数据");
 			}
-			
+
 			if (value.get("time") != null) {
 				history = Long.parseLong(value.get("time"));
 				pass = new Date().getTime() - history;
@@ -162,41 +151,42 @@ public class EquipText {
 				sb.append(s.getEquipmentname()).append("\t");
 				sb.append(s.getModularnum()).append("\t");
 				sb.append(s.getPathnum()).append("\t");
-				sb.append(DateUtil.format(new Date(history),"yyyy-MM-dd HH:mm:ss")).append("\t");
+				sb.append(
+						DateUtil.format(new Date(history),
+								"yyyy-MM-dd HH:mm:ss")).append("\t");
 				sb.append(value.get("value")).append("\t");
 				sb.append(a).append("\n");
 				FileOperation.writeTxFile(sb.toString(), time, "_中断数据");
-				
-				MialBean mail=new MialBean();
+
+				MialBean mail = new MialBean();
 				mail.setSensorData(s);
 				mail.setPass(pass);
 				mail.setHistory(history);
 				mail.setVaule(value.get("value"));
 				mail.setPassString(a);
-				
+
 				arrlyMial.add(mail);
 			}
-			
-//			else{
-//				StringBuffer sb = new StringBuffer();
-//				sb.append(s.getBridgename()).append("\t");
-//				sb.append(s.getEquipmentname()).append("\t");
-//				sb.append(s.getModularnum()).append("\t");
-//				sb.append(s.getPathnum()).append("\t");
-//				sb.append(
-//						DateUtil.format(new Date(history),
-//								"yyyy-MM-dd HH:mm:ss")).append("\t");
-//				sb.append(value.get("value")).append("\t");
-//				sb.append("正常数据").append("\n");
-//				FileOperation.writeTxFile(sb.toString(), time, "_中断数据");
-//				
-//			
-//			
-//			}
-			
-			
+
+			// else{
+			// StringBuffer sb = new StringBuffer();
+			// sb.append(s.getBridgename()).append("\t");
+			// sb.append(s.getEquipmentname()).append("\t");
+			// sb.append(s.getModularnum()).append("\t");
+			// sb.append(s.getPathnum()).append("\t");
+			// sb.append(
+			// DateUtil.format(new Date(history),
+			// "yyyy-MM-dd HH:mm:ss")).append("\t");
+			// sb.append(value.get("value")).append("\t");
+			// sb.append("正常数据").append("\n");
+			// FileOperation.writeTxFile(sb.toString(), time, "_中断数据");
+			//
+			//
+			//
+			// }
+
 		}
-		System.out.println("结束检查桥梁中断数据"+sdf.format(new Date()));
+		System.out.println("结束检查桥梁中断数据" + sdf.format(new Date()));
 		return arrlyMial;
 	}
 
@@ -219,7 +209,7 @@ public class EquipText {
 
 		}
 		FileOperation.writeTxFile("\n\n\n\n", time, "_超标数据");
-		System.out.println("结束检查桥梁错误数据"+sdf.format(new Date()));
+		System.out.println("结束检查桥梁错误数据" + sdf.format(new Date()));
 
 	}
 
