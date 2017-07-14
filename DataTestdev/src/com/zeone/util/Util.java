@@ -47,13 +47,13 @@ public class Util {
 				date = sdf.format(new Date().getTime() - 1 * 24 * 60 * 60
 						* 1000);
 			}
-//			databiudmysql da = new databiudmysql();
-//
-//			for (int i = 0; i < s.length; i++) 
-//			{
-//				da.testbaobiao(s[i], date, "bridgedatatestdev");
-//				da.testbaobiao(s[i], date, "bridgedatatestdevtz");
-//			}
+			databiudmysql da = new databiudmysql();
+
+			for (int i = 0; i < s.length; i++) 
+			{
+				da.testbaobiao(s[i], date, "bridgedatatestdev");
+				da.testbaobiao(s[i], date, "bridgedatatestdevtz");
+			}
 
 		}
 	}
