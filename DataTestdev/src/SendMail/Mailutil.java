@@ -228,7 +228,7 @@ public class Mailutil {
     	sb.append("<html>");
     	sb.append("<body>");
     	
-    	sb.append("下表是来历史分析系统分析结果请查阅、详细资料可想我索要");
+    	sb.append("下表是来历史分析系统分析结果请查阅、详细资料可向我索要");
     	
     	sb.append("<table border="+"1"+">");
     	
