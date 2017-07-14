@@ -33,6 +33,7 @@ import com.zeone.io.FileOperation;
 public class databiudmysql {
 	static String name;
 
+	@SuppressWarnings("static-access")
 	public static void insertintotable(ArrayList<databiud> databiud)
 			throws Exception {
 		MysqljdbcFactory ma = new MysqljdbcFactory();

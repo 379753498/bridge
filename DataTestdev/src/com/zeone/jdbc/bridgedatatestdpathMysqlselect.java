@@ -17,11 +17,10 @@ public class bridgedatatestdpathMysqlselect {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		MysqljdbcFactory ma = new MysqljdbcFactory();
 
 		String sql = "SELECT * FROM `bridgedatatestdpath` t WHERE  t.`leixing` IN ('位移','加速度','动态挠度','应变') AND t.name='实时值'   ORDER BY t.`bridgename`,t.`equipmentname`,t.`nowdate`";
 		try {
-			conn = ma.getConnection();
+			conn = MysqljdbcFactory.getConnection();
 			
 			rs = databiudmysql.findrs(conn, sql);
 			while (rs.next()) {

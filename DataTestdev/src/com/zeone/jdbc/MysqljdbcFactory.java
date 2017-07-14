@@ -40,7 +40,7 @@ public class MysqljdbcFactory {
     }  
       
     //单例模式返回数据库连接对象，供外部调用  
-    public Connection getConnection() throws SQLException   
+    public static Connection getConnection() throws SQLException   
     {  
          
         	Connection conn = (Connection) DriverManager.getConnection(url, username, password); //连接数据库  

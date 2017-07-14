@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 
 
+
+
+import com.zeone.bean.BeanWtihResult;
 import com.zeone.bean.SensorData;
 import com.zeone.bean.Sensordata14;
 /**
@@ -62,6 +65,39 @@ public class SensorService {
 		return data;
 	}
 	
+	
+	
+	public static ArrayList<BeanWtihResult> getAllBeanWtihResult( String date) {
+		ArrayList<BeanWtihResult> data = new ArrayList<BeanWtihResult>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT * FROM bridgedatatestdev WHERE `bridgedatatestdev`.`nowdate`='"+date+"' ";
+		try {
+			conn = MysqljdbcFactory.getConnection();
+			
+		 rs = databiudmysql.findrs(conn, sql);
+			while (rs.next()) {
+				BeanWtihResult s = new BeanWtihResult();
+				
+				s.setBridgename(rs.getString("bridgename"));
+			s.setEquipmentname(rs.getString("equipmentname"));
+			s.setModularnum(rs.getString("modularnum"));
+				s.setPathnum(rs.getString("pathnum"));
+		
+				
+				data.add(s);
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, stmt, rs);
+		}
+		return data;
+	}
 	
 	
 	
