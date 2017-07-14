@@ -126,7 +126,7 @@ public class Mailutil {
 //        message.setRecipients(MimeMessage.RecipientType.TO, Address);
 
         // 4. Subject: 邮件主题
-        message.setSubject("桥梁历史数据监测结果"+DateUtil.format(new Date(),	"yyyy-MM-dd HH:mm:ss"), "UTF-8");
+        message.setSubject("桥梁历史数据检测分析结果"+DateUtil.format(new Date(),	"yyyy-MM-dd HH:mm:ss"), "UTF-8");
 
         // 5. Content: 邮件正文（可以使用html标签）
         message.setContent(getContentx(datatest).toString(), "text/html;charset=UTF-8");
