@@ -184,7 +184,7 @@ public class Mailutil {
     	Address[] addre = new Address[1];
     	
     	
-    	addre[0]=new InternetAddress("379753498@qq.com",  "UTF-8");
+    	addre[0]=new InternetAddress("xujian_anhui@gsafety.com",  "UTF-8");
 		return addre;
     	
     	
