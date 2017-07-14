@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Address;
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
@@ -15,7 +14,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import com.sun.mail.util.MailSSLSocketFactory;
 import com.zeone.bean.MialBean;
 import com.zeone.lifeline.collector.util.DateUtil;
@@ -91,9 +89,6 @@ public class Mailutil {
 
         // 5. Content: 邮件正文（可以使用html标签）
         message.setContent(getContent(ls).toString(), "text/html;charset=UTF-8");
-        
-        
-
         // 6. 设置发件时间
         message.setSentDate(new Date());
 
@@ -193,8 +188,6 @@ public class Mailutil {
     public static Address[] getoneAddress() throws UnsupportedEncodingException
     {
     	Address[] addre = new Address[7];
-    	
-    	
     	addre[0]=new InternetAddress("chuzhujun@gsafety.com",  "UTF-8");
     	addre[1]=new InternetAddress("xujian_anhui@gsafety.com",  "UTF-8");
     	addre[2]=new InternetAddress("huangzhuanzhuan@gsafety.com",  "UTF-8");
@@ -203,7 +196,6 @@ public class Mailutil {
     	addre[5]=new InternetAddress("zhangxiaoxia@gsafety.com",  "UTF-8");
     	addre[6]=new InternetAddress("chengxueming@gsafety.com",  "UTF-8");
     	addre[7]=new InternetAddress("wangshouren@gsafety.com",  "UTF-8");
-    	
 		return addre;
     	
     	
