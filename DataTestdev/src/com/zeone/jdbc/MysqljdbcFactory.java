@@ -20,7 +20,7 @@ public class MysqljdbcFactory {
     * "?useUnicode=true&characterEncoding=UTF-8" 指定编码格式，无需时可省略， 
     * 即地址直接为："jdbc:mysql://localhost:3306/shopping" 
     */  
-    private static final String url="jdbc:mysql://localhost:3306/testdatafactory?useUnicode=true&characterEncoding=UTF-8";   
+    private static final String url="jdbc:mysql://localhost:3306/testdatafactory?useUnicode=true&characterEncoding=utf-8&useSSL=false";   
       
     private static final String username="root";//数据库的用户名  
     private static final String password="123456";//数据库的密码:这个是自己安装数据库的时候设置的，每个人不同。  
