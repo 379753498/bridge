@@ -129,7 +129,11 @@ public class FileFactoryReadimp implements FileFactoryRead {
 	}
 
 	
-	
+	/**
+	 * 提供给FTP获取文件列表功能
+	 * @param Filepath
+	 * @return
+	 */
 	public ArrayList<String> getfiledir(String Filepath) {
 		ArrayList<String> as= new ArrayList<String>();
 		System.out.println(Filepath);
