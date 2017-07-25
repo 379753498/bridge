@@ -84,9 +84,9 @@ public class Filereadertest2 {
 
 				Double maxvalue = Maths.germaxdouble(du);
 				Double minvalue = Maths.getminDouble(du);
-				Double rule = Maths.getfenzuqujian(maxvalue, minvalue);
-				ArrayList<lingdianyangben> yblist= new ArrayList<lingdianyangben>();
-				ArrayList<double[]> la = Maths.getfenzulist(maxvalue, minvalue,rule);
+				Double rule = Maths.getfenzuqujian(maxvalue, minvalue);//获取最大值最小值以后 通过最大值减去最小值 获取一个加权的值 
+				ArrayList<lingdianyangben> yblist= new ArrayList<lingdianyangben>();//
+				ArrayList<double[]> la = Maths.getfenzulist(maxvalue, minvalue,rule);// 然后以最小值+加权值 形成一个分组 这个分组不能大于最大值
 				int a1 = 0;
 				if (a1 == 0) 
 				{
@@ -99,7 +99,7 @@ public class Filereadertest2 {
 						double[] da = la.get(i);
 						 min = da[0];
 						 max = da[1];
-						ArrayList<Double> temp = Maths.getlistdouble(du, max,min);
+						ArrayList<Double> temp = Maths.getlistdouble(du, max,min);//遍历数据分组 获取每个分组的命中数据的占比 命中后就将命中数据返回到list
 						 size = temp.size();
 						 avg = Maths.getavgdouble(temp);
 						 lingdianyangben yb=new lingdianyangben();
@@ -111,11 +111,11 @@ public class Filereadertest2 {
 						 yb.setMin(min);
 						 yb.setSize(size);
 						 yb.setZhanbi(Maths.getbaifenbi(size, du.size()));
-						 yblist.add(yb);
+						 yblist.add(yb);//数据加工 把这个分组的 最大值 最小值 个数 对应传感器信息  平均值 占比率 封装到ArrayList<lingdianyangben> 对象中
 
 					}
 					
-					lingdianyangben lingdianshuju=Maths.getmaxlingdianyangben(yblist);
+					lingdianyangben lingdianshuju=Maths.getmaxlingdianyangben(yblist);//通过方法获取最大占比的分组样本
 					StringBuffer sb2 = new StringBuffer();
 					sb2.append(lingdianshuju.getSensorData().getBridgename() + "\t");
 					sb2.append(lingdianshuju.getVluaetype() + "\t");
