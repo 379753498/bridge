@@ -391,16 +391,18 @@ public class Mailutil {
     
     public static Address[] getoneAddress() throws UnsupportedEncodingException
     {
-    	Address[] addre = new Address[9];
-    	addre[0]=new InternetAddress("chuzhujun@gsafety.com", "储著钧", "UTF-8");
-    	addre[1]=new InternetAddress("xujian_anhui@gsafety.com", "徐健", "UTF-8");
-    	addre[2]=new InternetAddress("huangzhuanzhuan@gsafety.com", "黄转转", "UTF-8");
-    	addre[3]=new InternetAddress("xulei@gsafety.com", "徐磊", "UTF-8");
-    	addre[4]=new InternetAddress("huangwenshi@gsafety.com",  "黄文实","UTF-8");
-    	addre[5]=new InternetAddress("zhangxiaoxia@gsafety.com", "张老师", "UTF-8");
-    	addre[6]=new InternetAddress("chengxueming@gsafety.com", "程学明", "UTF-8");
-    	addre[7]=new InternetAddress("wangshouren@gsafety.com", "首长", "UTF-8");
-    	addre[8]=new InternetAddress("yuxiaolong@gsafety.com", "yuxiaolong", "UTF-8");
+    	Address[] addre = new Address[1];
+    	
+    	addre[0]=new InternetAddress("xujian_anhui@gsafety.com", "徐健", "UTF-8");
+//    	addre[1]=new InternetAddress("chuzhujun@gsafety.com", "储著钧", "UTF-8");
+//    	addre[2]=new InternetAddress("huangzhuanzhuan@gsafety.com", "黄转转", "UTF-8");
+//    	addre[3]=new InternetAddress("fuming@gsafety.com", "fuming", "UTF-8");
+//    	addre[4]=new InternetAddress("huangwenshi@gsafety.com",  "黄文实","UTF-8");
+//    	addre[5]=new InternetAddress("zhangxiaoxia@gsafety.com", "张老师", "UTF-8");
+//    	addre[6]=new InternetAddress("chengxueming@gsafety.com", "程学明", "UTF-8");
+//    	addre[7]=new InternetAddress("wangshouren@gsafety.com", "首长", "UTF-8");
+//    	addre[8]=new InternetAddress("yuxiaolong@gsafety.com", "yuxiaolong", "UTF-8");
+//    	addre[9]=new InternetAddress("wanglijuan@gsafety.com", "wanglijuan", "UTF-8");
 		return addre;
     	
     	
