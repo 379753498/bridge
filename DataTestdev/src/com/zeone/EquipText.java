@@ -48,30 +48,31 @@ public class EquipText {
 	 * @throws UnsupportedEncodingException
 	 */
 
-	public void init() throws UnsupportedEncodingException, Exception {
+	public int init() throws UnsupportedEncodingException, Exception {
 
 		RadisData radis = new RadisData();
 		System.out.println("开始检查桥梁中断数据" + sdf.format(new Date()));
 		ArrayList<MialBean> write = write(radis);
-		if (write.size() > 0) {
-			SendMail(write);
-		}
+	
 
 		System.out.println("开始检查桥梁错误数据" + sdf.format(new Date()));
 		errorwrite(radis);
 		System.out.println("开始检查桥梁超频数据" + sdf.format(new Date()));
 		Frequency f = new Frequency();
 		f.test(radis);
-
+		if (write.size() > 0) {
+			return  SendMail(write);
+		}
+		return 0;
 	}
 
-	public static void SendMail(ArrayList<MialBean> mail)throws UnsupportedEncodingException, Exception {
+	public static int SendMail(ArrayList<MialBean> mail)throws UnsupportedEncodingException, Exception {
 		int stratus = 0;
 		int flag = 0;
 		int oneflag = 0;
 //遍历获取中断超过5小时的个数
 		for (MialBean mialBean : mail) {
-			if (mialBean.getPass() > 1000 * 60 * 60 * 10)// 大于5小时的发送给哪些人
+			if (mialBean.getPass() > 1000 * 60 * 60 * 5)// 大于5小时的发送给哪些人
 			{
 				flag++;
 
@@ -92,14 +93,19 @@ public class EquipText {
 			Mailutil.Send(sessioninit, createMimeMessage,
 					Mailutil.getoneAddress());
 			stratus = 1;
-		} else if (oneflag > 20 && stratus == 0) {
+			return 1;
+			
+		} 
+		if (oneflag > 20 && stratus == 0) {
 			Session sessioninit = Mailutil.Sessioninit();
 
 			MimeMessage createMimeMessage = Mailutil.createMimeMessage(
 					sessioninit, mail);
 			Mailutil.Send(sessioninit, createMimeMessage, Mailutil.getAddress());
 			stratus = 0;
+			return 1;
 		}
+		return 0;
 
 	}
 
