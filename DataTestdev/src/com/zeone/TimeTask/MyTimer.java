@@ -2,6 +2,8 @@ package com.zeone.TimeTask;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.zeone.Config;
   
 public class MyTimer {
 
@@ -10,7 +12,7 @@ public class MyTimer {
 	public static void main(String[] args) {
 		
 		TimerTask ts =new TimeTask();
-		AutozhixingMethood(ts,0,1000*60*60);
+		AutozhixingMethood(ts,0,Config.exectime);
 		
 	}
 /**
@@ -22,9 +24,10 @@ public class MyTimer {
  * @param longtime  
  * @Description:
  */
-	private static void AutozhixingMethood(TimerTask task ,long whenBeginLongtime ,long longtime) {
+	static void AutozhixingMethood(TimerTask task ,long whenBeginLongtime ,long longtime) {
 		Timer time= new Timer();
 		time.schedule(task, whenBeginLongtime,longtime);
+		
 	}
 	/**
 	 * 在延时delay毫秒后执行task
