@@ -10,17 +10,15 @@ import com.zeone.bean.SensorData;
 import com.zeone.bean.bridgetestbaobiao;
 
 public class bridgetestbaobiaoservice {
-	
 
-	 
-	
-	public  ArrayList<bridgetestbaobiao>  getlist( String brideg)
-	{ArrayList<bridgetestbaobiao> data = new ArrayList<bridgetestbaobiao>();
+	public ArrayList<bridgetestbaobiao> getlist(String brideg) {
+		ArrayList<bridgetestbaobiao> data = new ArrayList<bridgetestbaobiao>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
-		String sql = "select count(mon.monproject) as count, mon.monproject  from bas_equipment a  left join MAM_IOTDNSCFG b    on a.equipmentid = b.equipmentid  and a.monprojectid = b.monprojectid  left join bas_bridge bridge   on a.bridgeid = bridge.bridgeid  left join mon_monproject mon  on a.monprojectid = mon.monprojectid where b.gatewaynum is not null  and bridge.bridgename = '"+brideg+"' and mon.monproject!='地磅' group by mon.monproject";
+		String sql = "select count(mon.monproject) as count, mon.monproject  from bas_equipment a  left join MAM_IOTDNSCFG b    on a.equipmentid = b.equipmentid  and a.monprojectid = b.monprojectid  left join bas_bridge bridge   on a.bridgeid = bridge.bridgeid  left join mon_monproject mon  on a.monprojectid = mon.monprojectid where b.gatewaynum is not null  and bridge.bridgename = '"
+				+ brideg + "' and mon.monproject!='地磅' group by mon.monproject";
 		try {
 			conn = JdbcFactory.getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -33,8 +31,6 @@ public class bridgetestbaobiaoservice {
 				s.setAvgzd("0");
 				s.setZdts("0");
 				data.add(s);
-					
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,15 +39,11 @@ public class bridgetestbaobiaoservice {
 		} finally {
 			close(conn, stmt, rs);
 		}
-		
+
 		return data;
 
-		
 	}
-	
-	
-	
-	
+
 	public static void close(Connection conn, PreparedStatement stmt,
 			ResultSet rs) {
 		try {
@@ -71,6 +63,5 @@ public class bridgetestbaobiaoservice {
 			e.printStackTrace();
 		}
 	}
-
 
 }
