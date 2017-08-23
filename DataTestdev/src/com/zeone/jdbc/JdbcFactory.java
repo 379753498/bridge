@@ -11,7 +11,7 @@ public class JdbcFactory {
 		String user = "LIFELINEDEV";
 		String pass = "LIFELINEDEV";
 		Connection conn = DriverManager.getConnection(url, user, pass);
-		System.out.println("连接成功！");
+	
 		return conn;
 	}
 	
@@ -24,7 +24,7 @@ public class JdbcFactory {
 		Connection conn = DriverManager.getConnection(url, user, pass);
 		
 	
-		System.out.println("连接成功！");
+		
 		return conn;
 	}
 	
@@ -39,7 +39,6 @@ public class JdbcFactory {
 		Connection conn = DriverManager.getConnection(url, user, pass);
 		
 	
-		System.out.println("连接成功！");
 		return conn;
 	}
 }

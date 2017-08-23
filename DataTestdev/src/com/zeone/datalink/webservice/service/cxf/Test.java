@@ -2,18 +2,24 @@ package com.zeone.datalink.webservice.service.cxf;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 
 import com.zeone.jdbc.JdbcFactory;
+import com.zeone.lifeline.collector.util.DateUtil;
 
 import net.sf.json.JSONObject;
 
 public class Test {
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException,
+			SQLException, ParseException {
 
 		VehicleInfoCXF_Service service = new VehicleInfoCXF_Service();
 
-		VehicleInfoCXF vehicleInfoCXFImplPort = service.getVehicleInfoCXFImplPort();
+		VehicleInfoCXF vehicleInfoCXFImplPort = service
+				.getVehicleInfoCXFImplPort();
 
 		data da = new data();
 		da.setDeviceKey("G1040602314501");
@@ -22,7 +28,7 @@ public class Test {
 		da.setPlateNo("测试1112");
 		da.setPlateType("6");
 		da.setVehicleWeight("67.13");
-		da.setIsOverWeight("0");
+		da.setIsOverWeight("1");
 		da.setOverWeight("12.13");
 		da.setLimitWeight("55.00");
 		da.setAxleNum("6");
@@ -41,13 +47,50 @@ public class Test {
 
 		JSONObject jsonObject = JSONObject.fromObject(da);
 		String string = jsonObject.toString();
-		System.out.println(string);
+		System.out.println("开始发送josn数据串" + string);
+
 		String sendVehicleWeight = vehicleInfoCXFImplPort
 				.sendVehicleWeight(string);
-		System.out.println(sendVehicleWeight);
+		System.out.println("收到来自服务返回值" + sendVehicleWeight);
+		int x = 0;
+		int y = 0;
 
-		Connection connection = JdbcFactory.getConnection();
-		
-		
+		ArrayList<data> get13list = SqlselectTest.get13list(da);// 查询13数据库数据
+		if (get13list.size() == 1) {
+			data data = get13list.get(0);
+
+			if (data.getPlateNo().equals(da.getPlateNo())) {
+
+				System.out.println("13数据保存成功" + data.toString());
+				System.out.println("原始发送数据是" + da.toString());
+				x = 1;
+			}
+		}
+
+		ArrayList<data> get15list = SqlselectTest.get15list(da);// 查询13数据库数据
+		if (get15list.size() == 1) {
+			data data = get15list.get(0);
+
+			if (data.getPlateNo().equals(da.getPlateNo())) {
+
+				System.out.println("15数据保存成功" + data.toString());
+				System.out.println("原始发送数据是" + da.toString());
+				y = 1;
+			}
+		}
+
+		if (x == 1 && y == 1) {
+			SqlselectTest.delete13(da);
+			System.out.println("13测试数据删除完成");
+			SqlselectTest.delete15(da);
+			System.out.println("15测试数据删除完成");
+
+			System.out.println("地磅服务测试完毕 问题的没有！");
+		}
+
+		else {
+			System.out.println("地磅服务测试完毕数据库没有找到对应数据！");
+		}
+
 	}
 }
