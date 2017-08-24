@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 
 
+import java.util.Date;
+
 import net.sf.json.JSONObject;
 
 public class Test {
@@ -15,6 +17,8 @@ public class Test {
 	public static void main(String[] args) throws ClassNotFoundException,
 			SQLException, ParseException {
 
+			
+		
 		VehicleInfoCXF_Service service = new VehicleInfoCXF_Service();
 
 		VehicleInfoCXF vehicleInfoCXFImplPort = service
@@ -38,19 +42,19 @@ public class Test {
 		da.setVehicleSpeed("56.29");
 		da.setAcceleration("-0.35");
 		da.setLaneNo("02");
-		da.setCheckTime("20170822013739");
+		da.setCheckTime("20170822013739"); 
 		da.setConfidenceLevel("95");
-		da.setHeadImageURL("http://112.27.200.87:8087/upload/1/20170823010948.jpg");
-		da.setBodyImageURL("http://112.27.200.87:8087/upload/1/20170823010948.jpg");
-		da.setTailImageURL("http://112.27.200.87:8087/upload/1/20170823010948.jpg");
+		da.setHeadImageURL("http://112.27.200.87:8087/upload/2/20170824000055.jpg");
+		da.setBodyImageURL("http://112.27.200.87:8087/upload/2/20170824000055.jpg");
+		da.setTailImageURL("http://112.27.200.87:8087/upload/2/20170824000055.jpg");
 
 		JSONObject jsonObject = JSONObject.fromObject(da);
 		String string = jsonObject.toString();
-		System.out.println("开始发送josn数据串" + string);
+		System.out.println("开始发送josn数据串" + string+ new Date());
 
 		String sendVehicleWeight = vehicleInfoCXFImplPort
 				.sendVehicleWeight(string);
-		System.out.println("收到来自服务返回值" + sendVehicleWeight);
+		System.out.println("收到来自服务返回值" + sendVehicleWeight+ new Date());
 		int x = 0;
 		int y = 0;
 
@@ -91,5 +95,7 @@ public class Test {
 			System.out.println("地磅服务测试完毕数据库没有找到对应数据！");
 		}
 
+	
+		
 	}
 }
