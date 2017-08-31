@@ -171,7 +171,7 @@ public class LoadoMeter {
 	 */
 	public static boolean checkMathCar(LoadoMeterBean LoadoMeterBean)
 	{
-		if (LoadoMeterBean.getISOVERWEIGHT().contains("1")) 
+		if (LoadoMeterBean.getISOVERWEIGHT().contains("1")) //判断是否是超载 如果不是超载就不需要进行验证
 		{
 			double VEHICLEWEIGHT = LoadoMeterinfo.Stringtodouble(LoadoMeterBean
 					.getVEHICLEWEIGHT());
