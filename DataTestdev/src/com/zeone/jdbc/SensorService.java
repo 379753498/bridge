@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import com.zeone.bean.BeanWtihResult;
 import com.zeone.bean.SensorData;
-import com.zeone.bean.Sensordata14;
 /**
  * 数据库相关操作
  */
@@ -101,41 +100,35 @@ public class SensorService {
 	
 	
 	
-	public static ArrayList<Sensordata14> getAllSensordata14() {
-		ArrayList<Sensordata14> data = new ArrayList<Sensordata14>();
+	public static ArrayList<SensorData> getAllSensordata14() {
+		ArrayList<SensorData> data = new ArrayList<SensorData>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
-		String sql = "select bridge.bridgename ,CGQ.EQUIPMENTID,CGQ.equipmentname,CGQ.Parent_Id ,CGQ.Device_Position , CGQ.Manufacturer ,shebeicanshubiao.sensor_code ,zidian.tname   from PLAT_BAS_EQUIPMENT CGQ    left join PLAT_BAS_EQUIPCONFIG shebeicanshubiao       on CGQ.Equipmentid = shebeicanshubiao.Equip_Id     left join PLAT_BAS_BRIDGE bridge  on bridge.BRIDGEID = shebeicanshubiao.BUILD_ID     left join PLAT_BAS_DICTIONARY zidian   on CGQ.Equiptype = zidian.TID   where CGQ.Sys_Flag = 'bridge' and shebeicanshubiao.point_flag='bridge'  and bridge.bridgename  in ('金寨路高架','环巢湖路南淝河大桥','派河大桥','繁华大道跨南淝河大桥','206立交桥') and  shebeicanshubiao.sensor_code is not null and CGQ.Parent_Id  is not null order by bridge.bridgename ";
+		String sql = "select a.equipmentname,a.parent_id,b.tid,b.monitor_id,c.bridgename,d.tname,b.sensor_code from  PLAT_BAS_EQUIPMENT a,PLAT_BAS_EQUIPCONFIG b,PLAT_BAS_BRIDGE c,plat_bas_dictionary d where a.equipmentid=b.equip_id and c.bridgeid=b.build_id and d.tid=b.monitor_id and b.sensor_code is not null and d.tname!='地磅' order by c.bridgename, d.tname ";
 		try {
 			conn = JdbcFactory.getConnection15();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				Sensordata14 s = new Sensordata14();
+				SensorData s = new SensorData();
 				
 				s.setBridgename(rs.getString("bridgename"));
-				s.setEQUIPMENTID(rs.getString("equipmentid"));
+				s.setEquipmentid(rs.getString("tid"));
 				s.setEquipmentname(rs.getString("equipmentname"));
-				s.setDevice_Position(rs.getString("device_position"));
-				s.setGatewaynum(rs.getString("Parent_Id"));
-			
-				s.setManufacturer(rs.getString("Manufacturer"));
+				s.setGatewaynum(rs.getString("parent_id"));
 				s.setLeixing(rs.getString("tname"));
-				
-				String a= rs.getString("sensor_code");
-				
-				if(a.contains("_"))
-				{
-				s.setModularnum(getModularnum(a));
-				s.setPathnum(getpathnum(a));
-				}
-				else
-				{
+				String a = rs.getString("sensor_code");
+
+				if (a.contains("_")) {
+					s.setModularnum(getModularnum(a));
+					s.setPathnum(getpathnum(a));
+				} else {
 					s.setModularnum("null");
 					s.setPathnum("null");
 				}
+				
 				data.add(s);
 				
 				
