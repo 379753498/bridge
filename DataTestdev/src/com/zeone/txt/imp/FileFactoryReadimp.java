@@ -782,7 +782,6 @@ public class FileFactoryReadimp implements FileFactoryRead {
 	}
 
 	public String getvalue(String s) throws ParseException {
-		// SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		String[] Strings = s.split("\t");
 		String s4 = Strings[Strings.length - 1];
