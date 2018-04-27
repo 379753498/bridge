@@ -30,7 +30,7 @@ public class VehicleInfoCXF_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://112.27.198.15:9009/bridge/services/VehicleInfoCXF?wsdl");
+            url = new URL("http://10.5.4.5:1087/bridge/services/VehicleInfoCXF?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
