@@ -23,14 +23,16 @@ public class FutureTaskCallableFileTest {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws InterruptedException,
 			ExecutionException {
-
+		Date  date = new Date();
+		 
+		 System.out.println(date.toString());
 		FileFactoryReadimp FileFactoryReadimp = new FileFactoryReadimp();
 		// 获取文件列表
 
 		String path = "D://bridgetestdemo";// 定义文件路径
 		ArrayList<String> filelist = FileFactoryReadimp.getfilenames(path);
 
-		ExecutorService ExecutorService = Executors.newFixedThreadPool(3);
+		ExecutorService ExecutorService = Executors.newFixedThreadPool(5);
 		List<FutureTask<ArrayList<databaen>>> FutureTask = new ArrayList<FutureTask<ArrayList<databaen>>>();
 		for (int i = 0; i < filelist.size(); i++) {
 
@@ -46,17 +48,14 @@ public class FutureTaskCallableFileTest {
 		ExecutorService.shutdown();
 
 		for (FutureTask<ArrayList<databaen>> future : FutureTask) {
-			System.out.println(future.isDone());
 			while (true) {
 				
 				if(future.isDone())
 				{ArrayList<databaen> x = future.get();
-				for (int i = 0; i < x.size(); i++) {
-					
-					databaen databaen = x.get(i);
-					System.out.println(databaen.toString());
+				
+					System.out.println(x.size());
 
-				}
+			
 				x.clear();
 				break;
 					
@@ -65,6 +64,10 @@ public class FutureTaskCallableFileTest {
 			}
 		}
 
+		
+		Date  date1 = new Date();
+		 
+		 System.out.println(date1.toString());
 	}
 
 }
