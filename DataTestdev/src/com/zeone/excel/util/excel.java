@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -14,6 +15,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.zeone.bean.databaen;
 
 public class excel {
 
@@ -164,26 +167,22 @@ public class excel {
  * 打印出数据
  * @throws Exception
  */
-	public void showExcel() throws Exception {
+	public List<databaen> showExcel() throws Exception {
 
-		for (int i = 0; i < Workbook.getNumberOfSheets(); i++) {// 获取每个Sheet表
-			Sheet sheet = Workbook.getSheetAt(i);
-			for (int j = 0; j < sheet.getPhysicalNumberOfRows(); j++) {// 获取每行
-				Row row = sheet.getRow(j);
-				for (int k = 0; k < row.getPhysicalNumberOfCells(); k++) {// 获取每个单元格
-
-					if (k == row.getPhysicalNumberOfCells() - 1) {
-
-						System.out.print(row.getCell(k) + "\n");
-					} else {
-						System.out.print(row.getCell(k) + "\t");
+		List<databaen> list = new ArrayList<databaen>();
+		// 获取每个Sheet表
+					Sheet sheet = Workbook.getSheetAt(0);
+					for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {// 获取每行
+						Row row = sheet.getRow(j);//第几行
+						
+						databaen da= new databaen();
+						da.setDatetime(row.getCell(2).toString());
+						da.setVALUE(row.getCell(3).toString());
+						
+						list.add(da);
 					}
-
-				}
-
-			}
-			System.out.println("---Sheet表" + sheet.getSheetName() + "处理完毕---");
-		}
+					return list;
+				
 	}
 
 	@SuppressWarnings("deprecation")

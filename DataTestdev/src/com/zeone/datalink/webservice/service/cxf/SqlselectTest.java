@@ -104,7 +104,7 @@ public class SqlselectTest {
 		String format = DateUtil.format(new Date(), "yyyyMMdd");
 		String sql = " select *  from bridge_mon_vehicledata t where t.plateno='"+ da.getPlateNo()+"' and  to_date(to_char(t.uploadtime, 'yyyy-mm-dd hh24:mi:ss'),'yyyy/mm/dd hh24:mi:ss') > (to_date('"+format+"', 'yyyymmdd'))order by t.uploadtime desc";
 		try {
-			conn = JdbcFactory.getConnection15();
+			conn = JdbcFactory.getConnection25();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {

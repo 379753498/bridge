@@ -17,9 +17,9 @@ public class LoadoMeterOacle {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
-		String sql = "select * from mon_vehicledata where UPLOADTIME >=to_date('"+date+" 00:00:00','yyyy-mm-dd hh24:mi:ss') and UPLOADTIME <= to_date('"+date+" 23:59:59','yyyy-mm-dd hh24:mi:ss')";
+		String sql = "select * from bridge_mon_vehicledata where UPLOADTIME >=to_date('"+date+" 00:00:00','yyyy-mm-dd hh24:mi:ss') and UPLOADTIME <= to_date('"+date+" 23:59:59','yyyy-mm-dd hh24:mi:ss')";
 		try {
-			conn = JdbcFactory.getConnection();
+			conn = JdbcFactory.getConnection43();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
